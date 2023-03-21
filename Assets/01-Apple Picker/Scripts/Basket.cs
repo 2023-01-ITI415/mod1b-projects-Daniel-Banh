@@ -34,13 +34,8 @@ public class Basket : MonoBehaviour
 		GameObject collidedWith = coll.gameObject;
 		if (collidedWith.tag == "Apple")
 		{
-			Destroy(collidedWith);
-			int score = int.Parse(scoreGT.text);
-			score+=100;
-			scoreGT.text=score.ToString();
-			if(score>HighScore.score){
-				HighScore.score=score;
-			}
+			Destroy(collidedWith);	
+			scoreCounter.score += 100;
 		}
 
 	}

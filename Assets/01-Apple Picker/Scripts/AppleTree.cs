@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AppleTree : MonoBehaviour
 {
+	[Header("Inscribed")]
 
 	public GameObject applePrefab;
 	public float speed = 1f;
-	public float leftAndRightEdge = 20f;
-	public float chanceToChangeDirections = 0.2f;
-	public float secondsBetweenAppleDrops = 1.5f;
+	public float leftAndRightEdge = 24f;
+	public float chanceToChangeDirections = 0.05f;
+	public float secondsBetweenAppleDrops = 1f;
 
 
 	// Use this for initialization
@@ -34,15 +35,11 @@ public class AppleTree : MonoBehaviour
 		{
 			speed = -Mathf.Abs(speed);
 		}
-
-	}
-
-	void FixedUpdate()
-	{
-		if (Random.value < chanceToChangeDirections)
+		else if (Random.value < chanceToChangeDirections)
 		{
 			speed *= -1;
 		}
+
 	}
 
 	void DropApple()
