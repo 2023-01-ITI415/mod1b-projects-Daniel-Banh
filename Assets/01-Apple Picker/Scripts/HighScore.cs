@@ -9,22 +9,28 @@ using UnityEngine.UI;
 
 public class HighScore : MonoBehaviour {
 
-    static public int score = 1000;
+    static private int  _SCORE = 1000; 
+    static private Text _UI_TEXT;
     
+    private Text txtCom;
+
     void Awake() {                                                      
-        if (PlayerPrefs.HasKey("HighScore")) {                           
-            score = PlayerPrefs.GetInt("HighScore");
-        }
-        PlayerPrefs.SetInt("HighScore", score);                         
+        _UI_TEXT = GetComponent<Text>();                      
     }                             
 
-    void Update () {                                                      
-        Text gt = this.GetComponent<Text>();
-        gt.text = "High Score: "+score;
-        if (score > PlayerPrefs.GetInt("HighScore")) {                     
-            PlayerPrefs.SetInt("HighScore", score);
+    static public int SCORE{
+        get { return _SCORE; }
+        private set {
+            _SCORE = value;
+            if ( _UI_TEXT != null ) {
+                _UI_TEXT.text = "High Score: " + value.ToString( "#,0" );
+            }
         }
+    }
 
+    static public void TRY_SET_HIGH_SCORE(int scoreToTry){
+        if (scoreToTry <= SCORE) return;
+        SCORE = scoreToTry;
     }
 
 }
