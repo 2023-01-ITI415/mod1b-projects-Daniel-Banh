@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ApplePicker : MonoBehaviour
 {
-	[Header("Set in Inspector")]
+	[Header("Inscribed")]
 
 	public GameObject basketPrefab;
 	public int numBaskets = 3;
@@ -27,7 +27,7 @@ public class ApplePicker : MonoBehaviour
 		}
 
 	}
-	public void AppleDestroyed()
+	public void AppleMissed()
 	{
 		GameObject[] tAppleArray = GameObject.FindGameObjectsWithTag("Apple");
 		foreach (GameObject tGO in tAppleArray)
@@ -36,9 +36,9 @@ public class ApplePicker : MonoBehaviour
 		}
 
 		int basketIndex = basketList.Count - 1;
-		GameObject tBasketGO = basketList[basketIndex];
+		GameObject basketGO = basketList[basketIndex];
 		basketList.RemoveAt(basketIndex);
-		Destroy(tBasketGO);
+		Destroy(basketGO);
 
 		if (basketList.Count == 0)
 		{
