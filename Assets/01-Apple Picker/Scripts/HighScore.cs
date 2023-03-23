@@ -9,28 +9,44 @@ using UnityEngine.UI;
 
 public class HighScore : MonoBehaviour {
 
-    static private int  _SCORE = 1000; 
-    static private Text _UI_TEXT;
-    
-    private Text txtCom;
+    static private Text      _UI_TEXT;                                        // a
+    static private int       _SCORE = 1000;                                   // b
 
-    void Awake() {                                                      
-        _UI_TEXT = GetComponent<Text>();                      
-    }                             
+    private Text txtCom;  // txtCom is a reference to this GOs Text component
 
-    static public int SCORE{
-        get { return _SCORE; }
-        private set {
+    void Awake () {                                                           // c
+        _UI_TEXT = GetComponent<Text>();
+        if (PlayerPrefs.HasKey("HighScore")) { 
+            SCORE = PlayerPrefs.GetInt("HighScore");         
+        }      
+        PlayerPrefs.SetInt("HighScore", SCORE);                    
+    }
+
+    static public int SCORE {  
+        get { return _SCORE; }                                               // e  
+        private set {                                                         // f
             _SCORE = value;
-            if ( _UI_TEXT != null ) {
+            PlayerPrefs.SetInt("HighScore", value);
+            if ( _UI_TEXT != null ) {                                         // g
                 _UI_TEXT.text = "High Score: " + value.ToString( "#,0" );
             }
         }
     }
 
-    static public void TRY_SET_HIGH_SCORE(int scoreToTry){
-        if (scoreToTry <= SCORE) return;
+    static public void TRY_SET_HIGH_SCORE( int scoreToTry ) {                 // h
+        if ( scoreToTry <= SCORE ) return; // If scoreToTry is too low, return
         SCORE = scoreToTry;
+    }
+    [Tooltip( "Check this box to reset the HighScore in PlayerPrefs" )]
+    public bool resetHighScoreNow = false;
+
+    void OnDrawGizmos() { 
+        if ( resetHighScoreNow ) {
+            resetHighScoreNow = false;
+            PlayerPrefs.SetInt( "HighScore", 1000 );
+            Debug.LogWarning( "PlayerPrefs HighScore reset to 1,000." );
+        }
     }
 
 }
+

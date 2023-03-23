@@ -446,6 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b986132e6ad221498de5bbe4871e35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 1
 --- !u!114 &1528831193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,6 +689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da298163f94ffbe46867d23e58801405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetHighScoreNow: 0
 --- !u!114 &1816989771
 MonoBehaviour:
   m_ObjectHideFlags: 0

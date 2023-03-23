@@ -4,70 +4,39 @@ using UnityEngine;
 
 public class FollowCam : MonoBehaviour
 {
-    static public GameObject POI;
+    static public GameObject POI; // The static point of interest             // a
 
-    [Header("Set in Inspector")]
+    [Header("Inscribed")]
     public float easing = 0.05f;
-    public Vector2 minXY = Vector2.zero;
+    public Vector2    minXY  = Vector2.zero;
 
-    [Header("Set Dynamically")]
-    public float camZ;
-    // Start is called before the first frame update
-    void Awake()
-    {
+    [Header("Dynamic")]
+    public float camZ; // The desired Z pos of the camera 
+
+    void Awake() {
         camZ = this.transform.position.z;
     }
 
-    void FixedUpdate()
-    {
-      //  if (POI == null) return;
-      //  Vector3 destination = POI.transform.position;
-
-        Vector3 destination;
-        //If there is no poi, return to P:[ 0, 0, 0 ]
-        if (POI == null)
-        {
-            destination = Vector3.zero;
-        }
-        else
-        {
-            // Get the position of the poi
-            destination = POI.transform.position;
-            // If poi is a Projectile, check to see if it's at rest
-            if (POI.tag == "Projectile")
-            {
-                // if it is sleeping (that is, not moving)
-                if (POI.GetComponent<Rigidbody>().IsSleeping())
-                {
-                    // return to default view
-                    POI = null;
-                    // in the next update
-                    return;
-                }
+    void FixedUpdate () {
+        Vector3 destination = Vector3.zero;
+        if ( POI != null ) {
+            Rigidbody poiRigid = POI.GetComponent<Rigidbody>();
+            if ( ( poiRigid != null ) && poiRigid.IsSleeping() ) {            // d
+                POI = null;
             }
         }
-
-        destination.x = Mathf.Max(minXY.x, destination.x);
-        destination.y = Mathf.Max(minXY.y, destination.y);
+        if ( POI != null ) {
+            destination = POI.transform.position;
+        }
+        destination.x = Mathf.Max( minXY.x, destination.x );
+        destination.y = Mathf.Max( minXY.y, destination.y );
+        // Force destination.z to be camZ to keep the camera far enough away
         destination = Vector3.Lerp(transform.position, destination, easing);
         destination.z = camZ;
+        // Set the camera to the destination
         transform.position = destination;
-        Camera.main.orthographicSize = destination.y + 10;
     }
-
-
-
-
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // void Start() {…}  // Please delete the unused Start() and Update() methods
+    // void Update() {…}
 }
+    
